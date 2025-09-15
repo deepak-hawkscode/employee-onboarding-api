@@ -4,7 +4,6 @@ import path from "path";
 import { uploadDocuments, downloadDocument } from "../controllers/documentController.js";
 import { protect } from "../middleware/authMiddleware.js";
 
-// Multer setup
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "uploads/");
@@ -14,7 +13,6 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter - only PDFs
 const fileFilter = (req, file, cb) => {
   const ext = path.extname(file.originalname).toLowerCase();
   if (ext === ".pdf") {
@@ -33,10 +31,8 @@ const upload = multer({
 
 const router = Router();
 
-// Upload multiple PDF documents (protected)
 router.post("/upload", protect, upload.array("documents", 5), uploadDocuments);
 
-// Download document by name (protected)
 router.get("/download/:name", protect, downloadDocument);
 
 export default router;

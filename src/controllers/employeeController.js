@@ -1,7 +1,6 @@
 import Employee from "../models/Employee.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 
-// Get all employees
 export const getEmployees = async (req, res) => {
   try {
     const employees = await Employee.find({},{__v:0}).select("-password");
@@ -11,7 +10,6 @@ export const getEmployees = async (req, res) => {
   }
 };
 
-// Get single employee
 export const getEmployeeById = async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id,{__v:0}).select("-password");
@@ -22,7 +20,6 @@ export const getEmployeeById = async (req, res) => {
   }
 };
 
-// Update employee
 export const updateEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true }).select("-password");
@@ -34,7 +31,6 @@ export const updateEmployee = async (req, res) => {
   }
 };
 
-// Delete employee
 export const deleteEmployee = async (req, res) => {
   try {
     const employee = await Employee.findByIdAndDelete(req.params.id);

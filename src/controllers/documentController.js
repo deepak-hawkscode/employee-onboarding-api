@@ -3,17 +3,14 @@ import Document from "../models/Document.js";
 import { saveFileInfo } from "../services/fileService.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 
-// Upload Document
 export const uploadDocuments = async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return errorResponse(res, "No file uploaded", 400);
     }
 
-    // Call saveFileInfo for each uploaded file
     const fileInfos = req.files.map((file) => saveFileInfo(file));
 
-    // Save documents in DB with employee reference
     const documents = await Document.insertMany(
       fileInfos.map((info) => ({
         employee: req.user._id,
@@ -27,7 +24,6 @@ export const uploadDocuments = async (req, res) => {
   }
 };
 
-// Get employee documents
 export const getDocuments = async (req, res) => {
   try {
     const docs = await Document.find({ employee: req.user._id });
@@ -37,7 +33,6 @@ export const getDocuments = async (req, res) => {
   }
 };
 
-// Delete document
 export const deleteDocument = async (req, res) => {
   try {
     const doc = await Document.findByIdAndDelete(req.params.id);
@@ -49,7 +44,6 @@ export const deleteDocument = async (req, res) => {
   }
 };
 
-// ✅ Download document by name
 export const downloadDocument = async (req, res) => {
   try {
     const { name } = req.params;

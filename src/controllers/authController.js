@@ -4,7 +4,6 @@ import Joi from "joi";
 import { generateToken } from "../services/tokenService.js";
 import { successResponse, errorResponse } from "../utils/response.js";
 
-// ------------------- Validation Schemas -------------------
 const registerSchema = Joi.object({
   name: Joi.string().min(3).max(50).required().messages({
     "string.empty": "Name is required",
@@ -33,12 +32,9 @@ const loginSchema = Joi.object({
   }),
 });
 
-// ------------------- Controllers -------------------
-
-// Register Employee
+ 
 export const register = async (req, res) => {
   try {
-    // Validate request body
     const { error } = registerSchema.validate(req.body);
     if (error) return errorResponse(res, error.details[0].message, 400);
 
@@ -67,10 +63,8 @@ export const register = async (req, res) => {
   }
 };
 
-// Login Employee
 export const login = async (req, res) => {
   try {
-    // Validate request body
     const { error } = loginSchema.validate(req.body);
     if (error) return errorResponse(res, error.details[0].message, 400);
 

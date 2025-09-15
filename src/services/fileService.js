@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-// Save file metadata (could be extended for DB storage)
 export const saveFileInfo = (file) => {
   return {
     filename: file.filename,
@@ -11,7 +10,6 @@ export const saveFileInfo = (file) => {
   };
 };
 
-// Get file by name
 export const getFileByName = (filename) => {
   const filePath = path.join(process.cwd(), "uploads", filename);
   if (fs.existsSync(filePath)) {
